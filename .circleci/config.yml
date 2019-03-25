@@ -40,9 +40,6 @@ jobs:
           command: |
             gem install hiptest-publisher
             hiptest-publisher --token 24217329994854315832799885021744245684935169348830984566 -c rspec.conf --test-run-id 243901 --only=tests
-          # environment:
-          #   SECRET_TOKEN: 24217329994854315832799885021744245684935169348830984566
-
       # run tests!
       - run:
           name: run tests
