@@ -51,9 +51,16 @@ jobs:
             bundle exec rspec --format RspecJunitFormatter -o report.xml
             
       - run:
-          name: run tests
+          name: push tests results file
           command:
             hiptest-publisher -c rspec.conf --token=$SECRET_TOKEN --push=report.xml --test-run-id=243901
           environment:
             SECRET_TOKEN: 24217329994854315832799885021744245684935169348830984566
-
+workflows:
+  version: 2
+  example_jobs:
+    jobs:
+      - update features files with hiptest-publisher
+      - push tests results file:
+          requires:
+            - update features files with hiptest-publisher
