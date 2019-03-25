@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  hiptest-publisher:
     docker:
       # specify the version you desire here
       - image: circleci/ruby:2.5.3-node-browsers
@@ -49,7 +49,8 @@ jobs:
           name: run tests
           command:
             bundle exec rspec --format RspecJunitFormatter -o report.xml
-            
+
+  push results:
       - run:
           name: push tests results file
           command:
@@ -60,7 +61,7 @@ workflows:
   version: 2
   example_jobs:
     jobs:
-      - update features files with hiptest-publisher
-      - push tests results file:
+      - hiptest-publisher
+      - push results:
           requires:
-            - update features files with hiptest-publisher
+            - hiptest-publisher
