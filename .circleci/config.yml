@@ -64,8 +64,4 @@ workflows:
       - hiptest-publisher
       - push results:
           requires:
-<<<<<<< HEAD
             - hiptest-publisher
-=======
-            - hiptest-publisher
->>>>>>> e7ecafb1c1b2d947bd0500c6e410642db6ff7e24
