@@ -30,8 +30,6 @@ jobs:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-          environment:
-            SECRET_TOKEN: 24217329994854315832799885021744245684935169348830984566
       - save_cache:
           paths:
             - ./vendor/bundle
@@ -41,10 +39,12 @@ jobs:
           name: update features files with hiptest-publisher
           command: |
             echo 'export PATH=$PATH:.'
+            echo 'export SECRET_TOKEN=24217329994854315832799885021744245684935169348830984566' >> ~/.bashrc
+            source ~/.bashrc
             gem install hiptest-publisher
             hiptest-publisher --token $SECRET_TOKEN -c rspec.conf --test-run-id 243901 --only=tests
-          environment:
-            SECRET_TOKEN: 24217329994854315832799885021744245684935169348830984566
+          # environment:
+          #   SECRET_TOKEN: 24217329994854315832799885021744245684935169348830984566
 
       # run tests!
       - run:
@@ -55,6 +55,7 @@ jobs:
       - run:
           name: push tests results file
           command:
+            source ~/.bashrc
             hiptest-publisher -c rspec.conf --token $SECRET_TOKEN --push report.xml --test-run-id=243901
           environment:
             SECRET_TOKEN: 24217329994854315832799885021744245684935169348830984566
